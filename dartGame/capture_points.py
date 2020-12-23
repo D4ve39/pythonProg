@@ -21,14 +21,18 @@ if (cam_on):
         ret, frame = cap.read()
         # Resize frame
         frame = cv2.resize(frame, (1024, 768), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
-        # Add edge dectection filter on each frame
-        edge_detect = cv2.Canny(frame, 100, 200)
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # adaptive thresholding to use different threshold
+        # values on different regions of the frame.
+        #filtered = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+        prefiltered = cv2.GaussianBlur(frame, (5, 5), 0)
+        filtered = cv2.Canny(prefiltered, 100, 200)
+
         # 1280 × 720
         # Show resulting frame once edge detection is applied
-        cv2.imshow('Shooting Board', edge_detect)
+        cv2.imshow('Shooting Board', filtered)
 
         #	TODO	Notify user to take reference image
-
         # Escape meas process or take picture using space
         k = cv2.waitKey(1)
         if k % 256 == 27:
@@ -38,7 +42,7 @@ if (cam_on):
         elif k % 256 == 32:
             # Space pressed => capture one image
             img_name = "dartCapture_{}.png".format(img_counter)
-            cv2.imwrite(img_name, frame)
+            cv2.imwrite(img_name, filtered)
             print("{} written!".format(img_name))
             img_counter += 1
 

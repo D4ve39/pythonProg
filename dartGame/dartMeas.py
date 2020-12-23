@@ -8,7 +8,7 @@ import cv2
 
 # import the necessary packages
 import imutils
-from skimage.measure import compare_ssim
+from skimage.metrics import structural_similarity
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -27,7 +27,7 @@ grayB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
 
 # compute the Structural Similarity Index (SSIM) between the two
 # images, ensuring that the difference image is returned
-(score, diff) = compare_ssim(grayA, grayB, full=True)
+(score, diff) = structural_similarity(grayA, grayB, full=True)
 diff = (diff * 255).astype("uint8")
 print("SSIM: {}".format(score))
 
