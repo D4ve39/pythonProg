@@ -56,55 +56,22 @@ def checkCollumn(indColumn, numb):
         res = True
     return res
 
+def testCase(indRow, indColumn, numb):
+    subInd = whichSubGrid(indRow, indColumn)
+    cond1 = checkSubGrid(subInd, numb)
+    cond2 = checkRow(indRow, numb)
+    cond3 = checkCollumn(indColumn, numb)
+    return cond1 and cond2 and cond3
+
 
 used[0] = list(grid[0][:3])
 used[1] = list(grid[0][3:6])
 used[2] = list(grid[0][6:9])
 backupList = []
 backupList.append(np.copy(grid))
-print(backupList)
-usedBackup = used
 
-print(used)
 for indRow in range(1, 9):
-    reset = True
-    possible = [1,2,3,4,5,6,7,8,9]
-    shuffle(possible)
-    print(possible)
     for indColumn in range(0, 9):
-        # print(indRow, indColumn)
-        reset = True
-        resCount = 0
-        while(reset):
-            for tested in range(9):
-                rand = possible[tested]
-                subInd = whichSubGrid(indRow, indColumn)
-                cond1 = checkSubGrid(subInd, rand)
-                cond2 = checkRow(indRow, rand)
-                cond3 = checkCollumn(indColumn, rand)
-                print("Tester le numero ", rand)
-                if (cond1 and cond2 and cond3):
-                    grid[indRow][indColumn] = int(rand)
-                    used[subInd].append(int(rand))
-                    print(rand , " ecrit en", indRow, " et ", indColumn)
-                    reset = False
-                    break
-                else:
-                    if(tested == 8):
-                        reset = True
-                        print("-------------------------------RESET-------------------------------------")
-                        print("PRE Backup grid")
-                        print(grid)
-                        grid = backupList[-1]
-                        used = usedBackup
-                        print("POST Backup grid")
-                        print(grid)
-                        print(used)
-                        shuffle(possible)
-                    print("nombre " ,rand , " deja pris")
-        backupList.append(np.copy(grid))
-
-        if(grid[indRow][indColumn]):
-            print("passed ", grid[indRow])
+        
 print("Generated sudoku")
 print(grid)
