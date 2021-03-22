@@ -7,10 +7,12 @@ x = np.arange(10,21,1)
 
 # Measured AC voltage
 y = np.array([4.1003,4.5002,4.9464,5.3367,5.79,6.19,6.5996,7.0643,7.4445,7.9709,8.400])
-# Measured AC voltage (relative) deviations (mV)
+# Measured AC voltage (relative) deviations in V
 relStdAb = np.array([4.5362,2.8228,25.4,26.373,0,1.26,18.9,21.072,27.476,43.040,0])*0.001
+
+measDeviations = np.array([116.9,121.2,128.8,133.6,136.6,141.8,148.4,155,161.2,235.1,235.9])*0.0001
 # Standard deviation of measurements
-stdAb = np.multiply(y,relStdAb)
+stdAb = np.multiply(y,measDeviations)
 # Upper limit of measurement boxes
 maxAb = y+stdAb
 
